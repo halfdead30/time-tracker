@@ -1,5 +1,5 @@
-import TrackerForm from "../components/form/form";
-import TrackerList from "../components/tracker-list/trackerList";
+import TrackerForm from "../components/TrackerForm/TrackerForm";
+import TrackerList from "../components/TrackerList/TrackerList";
 
 const TimeTracker = () => {
   return (

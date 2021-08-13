@@ -1,5 +1,5 @@
 import React from "react";
-import TimeTracker from "./app/tracker";
+import TimeTracker from "./app/Tracker";
 
 import "./App.css";
 

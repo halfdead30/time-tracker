@@ -7,22 +7,17 @@ const TrackersSlice = createSlice({
   initialState,
   reducers: {
     addTimeTracker: (state, action) => {
-      state.unshift(action.payload);
+      return [action.payload, ...state];
     },
-    removeTimeTracker: (state, action) => {
+    removeTimeTracker(state, action) {
       return state.filter((tracker) => tracker.id !== action.payload.id);
     },
-    updateTimeTracker: (state, action) => {
-      const { id } = action.payload;
+    updateTimeTracker(state, action) {
+      const { id, formatedTime } = action.payload;
 
-      return state.map((tracker) => {
-        if (id !== tracker.id) return tracker;
-
-        return {
-          ...tracker,
-          isActive: !tracker.isActive,
-        };
-      });
+      return state.map((el) =>
+        el.id === id ? { ...el, time: formatedTime } : el
+      );
     },
   },
 });

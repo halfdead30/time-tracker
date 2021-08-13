@@ -1,48 +1,39 @@
 import { nanoid } from "@reduxjs/toolkit";
 import moment from "moment";
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { ReactComponent as PlayCircle } from "../../assets/play_circle.svg";
 import { addTimeTracker } from "../../store/trackersSlice";
 
-const InputControl = () => {
+const TrackerForm = () => {
   const [trackerTitle, setTrackerTitle] = useState("No name tracker:");
   const dispatch = useDispatch();
-  const inputBtn = useRef();
 
   // Handle input change and set state by e.target.value
   const handleInputChange = (e) => {
-    const target = e.target.value;
-
-    if (target === "") {
+    if (e.target.value === "") {
       setTrackerTitle("No name tracker:");
     } else {
-      setTrackerTitle(target);
+      setTrackerTitle(e.target.value);
     }
   };
 
-  // Dispatch action to reducer
+  // Dispatch action to reducer and add new time tracker
   const addTracker = (e) => {
     e.preventDefault();
 
-    const momentObj = moment().startOf("day").format();
+    const startedAt = moment().startOf("day").format();
 
     dispatch(
       addTimeTracker({
         id: nanoid(),
-        timestamp: momentObj,
+        startedAt,
+        time: "00:00:00",
         title: trackerTitle,
         isActive: false,
       })
     );
   };
-
-  useEffect(() => {
-    const inputBtnRef = inputBtn;
-
-    inputBtn.current.addEventListener("click", addTracker);
-    return () => inputBtnRef.current.removeEventListener("click", addTracker);
-  }, [trackerTitle]);
 
   return (
     <form action="" className="timetracker-form" onSubmit={addTracker}>
@@ -52,9 +43,9 @@ const InputControl = () => {
         placeholder="Enter tracker name"
         onChange={handleInputChange}
       />
-      <PlayCircle ref={inputBtn} className="timetracker-form__btn" />
+      <PlayCircle onClick={addTracker} className="timetracker-form__btn" />
     </form>
   );
 };
 
-export default InputControl;
+export default TrackerForm;

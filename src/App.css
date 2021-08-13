@@ -82,7 +82,6 @@ ul {
 }
 
 .timetracker-list__item.active {
-  font-size: 1.0625rem;
   background-color: #fdfdf6;
   color: #3faf6c;
 }
